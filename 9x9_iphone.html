@@ -321,47 +321,47 @@
             });
         }
 
-        downloadButton.addEventListener('touchstart', function () {
-            const canvas = document.createElement('canvas');
-            canvas.width = imageGrid.offsetWidth;
-            canvas.height = imageGrid.offsetHeight;
-            const ctx = canvas.getContext('2d');
-            let counter = 0;
-			let previous_left = 0;
-			let previous_top = 0;
-            ctx.fillStyle = 'white'; // 设置背景颜色为白色
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+    downloadButton.addEventListener('touchstart', function (e) {
+    // 处理下载按钮的点击事件
+    const canvas = document.createElement('canvas');
+    canvas.width = imageGrid.offsetWidth;
+    canvas.height = imageGrid.offsetHeight;
+    const ctx = canvas.getContext('2d');
+    let counter = 0;
+    let previous_left = 0;
+    let previous_top = 0;
+    ctx.fillStyle = 'white'; // 设置背景颜色为白色
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            cells.forEach((cell, index) => {
-                const img = cell.querySelector('img');
-                const left = cell.offsetLeft; /*cell.offsetLeft;*/
-                const top = cell.offsetTop; /*cell.offsetTop;*/
-                if(counter === 0)
-                {
-					previous_left = left;
-					previous_top = top;
-                	ctx.drawImage(img, 0, 0, img.width, img.height);
-                }
-                else if(counter === 1 || counter === 2)
-                {
-                	ctx.drawImage(img, left - previous_left, 0, img.width, img.height);
-                }
-                else if(counter === 3 || counter === 6)
-                {
-                	ctx.drawImage(img, 0, top-previous_top, img.width, img.height);
-                }
-                else
-                {
-                	ctx.drawImage(img, left - previous_left, top-previous_top, img.width, img.height);
-                }
-                counter++;
-            });
+    cells.forEach((cell, index) => {
+        const img = cell.querySelector('img');
+        const left = cell.offsetLeft; /*cell.offsetLeft;*/
+        const top = cell.offsetTop; /*cell.offsetTop;*/
+        if(counter === 0)
+        {
+            previous_left = left;
+            previous_top = top;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+        }
+        else if(counter === 1 || counter === 2)
+        {
+            ctx.drawImage(img, left - previous_left, 0, img.width, img.height);
+        }
+        else if(counter === 3 || counter === 6)
+        {
+            ctx.drawImage(img, 0, top-previous_top, img.width, img.height);
+        }
+        else
+        {
+            ctx.drawImage(img, left - previous_left, top-previous_top, img.width, img.height);
+        }
+        counter++;
+    });
 
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/jpeg');
-            link.download = 'merged_image.jpg';
-            link.click();
-        });
+    const link = document.createElement('a');
+    link.href = canvas.toDataURL('image/jpeg');
+    link.download = 'merged_image.jpg';
+    link.click();
     </script>
 </body>
 </html>
