@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>九宮格圖片編輯器</title>
+    <style>
+        #image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1cm; /* 設定間距為1cm */
+            width: 850px;
+            height: 850px;
+        }
+
+        .image-cell {
+            width: 100%;
+            height: 100%; 	
+            position: relative;
+            overflow: hidden;
+            border: 2px solid black;
+        }
+
+        .image-cell img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            z-index: 1;
+        }
+
+        .control-button {
+            font-size: 20px;
+            cursor: pointer;
+			background-color: transparent;
+            border: 1px solid #000000; /* 边框颜色为黑色 */
+            color: #000000; /* 文字颜色为黑色 */
+            padding: 2px 8px; /* 设置按钮内边距 */
+			transition: background-color 0.3s, color 0.3s; /* 添加过渡效果 */
+			border-radius: 5px; /* 添加圆角边框 */
+        }
+		
+        .control-button:hover {
+			background-color: rgba(0, 128, 0, 0.5); /* 设置透明度为50% */
+            color: #000000; /* 鼠标悬停时文字颜色变为黑色 */
+        }
+		
+		.rotate-180 {
+			transform: rotate(180deg); /* 将元素旋转180度 */
+		}
+  
+		#download-button {
+			font-size: 20px;
+            display: block;
+            margin-top: 14px;
+			border-radius: 5px; /* 添加圆角边框 */
+        }
+		
+		#download-button:hover {
+			background-color: rgba(0, 128, 0, 0.5); /* 设置透明度为50% */
+        }
+    </style>
+</head>
+<body>
+    <div id="image-grid">
+        <div class="image-cell" id="cell0">
+            <div class="controls">
+				<span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-0" style="display: none;">
+                <span class="control-button" id="upload-0">Upload</span>
+            </div>
+            <img id="image-0">
+        </div>
+        <div class="image-cell" id="cell1">
+            <div class="controls">
+                <span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-1" style="display: none;">
+                <span class="control-button" id="upload-1">Upload</span>
+            </div>
+            <img id="image-1">
+        </div>
+        <div class="image-cell" id="cell2">
+            <div class="controls">
+                <span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-2" style="display: none;">
+                <span class="control-button" id="upload-2">Upload</span>
+            </div>
+            <img id="image-2">
+        </div>
+        <div class="image-cell" id="cell3">
+            <div class="controls">
+                <span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-3" style="display: none;">
+                <span class="control-button" id="upload-3">Upload</span>
+            </div>
+            <img id="image-3">
+        </div>
+        <div class="image-cell" id="cell4">
+            <div class="controls">
+                <span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-4" style="display: none;">
+                <span class="control-button" id="upload-4">Upload</span>
+            </div>
+            <img id="image-4">
+        </div>
+        <div class="image-cell" id="cell5">
+            <div class="controls">
+                <span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-5" style="display: none;">
+                <span class="control-button" id="upload-5">Upload</span>
+            </div>
+            <img id="image-5">
+        </div>
+        <div class="image-cell" id="cell6">
+            <div class="controls">
+                <span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-6" style="display: none;">
+                <span class="control-button" id="upload-6">Upload</span>
+            </div>
+            <img id="image-6">
+        </div>
+        <div class="image-cell" id="cell7">
+            <div class="controls">
+                <span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-7" style="display: none;">
+                <span class="control-button" id="upload-7">Upload</span>
+            </div>
+            <img id="image-7">
+        </div>
+        <div class="image-cell" id="cell8">
+            <div class="controls">
+                <span class="control-button" id="zoom-out">-</span>
+                <span class="control-button" id="zoom-in">+</span>
+				<span class="control-button" id="move-left">&lt;</span>
+                <span class="control-button" id="move-right">&gt;</span>
+				<span class="control-button rotate-180" id="move-up">v</span>
+                <span class="control-button" id="move-down">v</span>
+                <input type="file" accept="image/*" id="upload-button-8" style="display: none;">
+                <span class="control-button" id="upload-8">Upload</span>
+            </div>
+            <img id="image-8">
+        </div>
+    </div>
+    <button id="download-button">Download</button>
+
+    <script>
+        const imageGrid = document.getElementById('image-grid');
+        const downloadButton = document.getElementById('download-button');
+        const cells = [];
+
+        function resizeImage(e) {
+            const target = e.target;
+            if (target.tagName === 'IMG') {
+                const img = target;
+                const deltaX = e.clientX - img.startX;
+                const deltaY = e.clientY - img.startY;
+                img.style.left = img.startLeft + deltaX + 'px';
+                img.style.top = img.startTop + deltaY + 'px';
+            }
+        }
+
+        function endResizeImage(e) {
+            const target = e.target;
+            if (target.tagName === 'IMG') {
+                document.removeEventListener('mousemove', resizeImage);
+                document.removeEventListener('mouseup', endResizeImage);
+            }
+            
+            document.addEventListener('click', function(e) {
+            if (e.target.id === 'upload') {
+                const input = e.target.previousElementSibling;
+                input.click();
+            }
+            else if (e.target.id === 'zoom-in' || e.target.id === 'zoom-out') {
+                const img = e.target.parentElement.parentElement.querySelector('img');
+                if (img) {
+                    const currentWidth = img.width;
+                    const currentHeight = img.height;
+                    const scaleFactor = 1.05;
+
+					if(e.target.id === 'zoom-in')
+                    {
+                    	img.style.width = currentWidth * scaleFactor + 'px';
+                    	img.style.height = currentHeight * scaleFactor + 'px';
+                    }
+                    else
+                    {
+                    	img.style.width = currentWidth / scaleFactor + 'px';
+                    	img.style.height = currentHeight / scaleFactor + 'px';
+                    }
+                }
+            }
+			else 
+			{
+				const img = e.target.parentElement.parentElement.querySelector('img');
+				const currentLeft = parseFloat(getComputedStyle(img).left);
+				const currentTop = parseFloat(getComputedStyle(img).top);
+
+				if (e.target.id === 'move-left')
+				{
+					img.style.left = (currentLeft -5) + 'px';
+					img.style.top = (currentTop + 0) + 'px';
+				}
+				else if (e.target.id === 'move-right')
+				{
+					img.style.left = (currentLeft + 5) + 'px';
+					img.style.top = (currentTop + 0) + 'px';
+				}
+				else if (e.target.id === 'move-up')
+				{
+					img.style.left = (currentLeft + 0) + 'px';
+					img.style.top = (currentTop + -5) + 'px';
+				}
+				else if (e.target.id === 'move-down')
+				{
+					img.style.left = (currentLeft + 0) + 'px';
+					img.style.top = (currentTop + 5) + 'px';
+				}
+			}
+
+        });
+        }
+
+        function updateCellSize(cell) {
+            const img = cell.querySelector('img');
+            const imgWidth = img.width;
+            const imgHeight = img.height;
+            const cellWidth = cell.offsetWidth;
+            const cellHeight = cell.offsetHeight;
+            if (imgWidth / cellWidth > imgHeight / cellHeight) {
+                img.style.width = '100%';
+                img.style.height = 'auto';
+            } else {
+                img.style.width = 'auto';
+                img.style.height = '100%';
+            }
+        }
+
+        for (let i = 0; i < 9; i++) {
+            const cell = document.getElementById(`cell${i}`);
+            cells.push(cell);
+
+            cell.addEventListener('mousedown', function (e) {
+                if (e.target.tagName === 'IMG') {
+                    const img = e.target;
+                    img.startX = e.clientX;
+                    img.startY = e.clientY;
+                    img.startLeft = img.offsetLeft;
+                    img.startTop = img.offsetTop;
+
+                    document.addEventListener('mousemove', resizeImage);
+                    document.addEventListener('mouseup', endResizeImage);
+                }
+            });
+
+            const uploadButton = document.getElementById(`upload-${i}`);
+            const uploadInput = document.getElementById(`upload-button-${i}`);
+
+            uploadButton.addEventListener('click', function () {
+                uploadInput.click();
+            });
+
+            uploadInput.addEventListener('change', function (e) {
+                const input = e.target;
+                if (input.type === 'file' && input.accept === 'image/*') {
+                    const img = cell.querySelector('img');
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        img.src = event.target.result;
+                        updateCellSize(cell);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+        }
+
+        downloadButton.addEventListener('click', function () {
+            const canvas = document.createElement('canvas');
+            canvas.width = imageGrid.offsetWidth;
+            canvas.height = imageGrid.offsetHeight;
+            const ctx = canvas.getContext('2d');
+            let counter = 0;
+			let previous_left = 0;
+			let previous_top = 0;
+            ctx.fillStyle = 'white'; // 设置背景颜色为白色
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            cells.forEach((cell, index) => {
+                const img = cell.querySelector('img');
+                const left = cell.offsetLeft; /*cell.offsetLeft;*/
+                const top = cell.offsetTop; /*cell.offsetTop;*/
+                if(counter === 0)
+                {
+					previous_left = left;
+					previous_top = top;
+                	ctx.drawImage(img, 0, 0, img.width, img.height);
+                }
+                else if(counter === 1 || counter === 2)
+                {
+                	ctx.drawImage(img, left - previous_left, 0, img.width, img.height);
+                }
+                else if(counter === 3 || counter === 6)
+                {
+                	ctx.drawImage(img, 0, top-previous_top, img.width, img.height);
+                }
+                else
+                {
+                	ctx.drawImage(img, left - previous_left, top-previous_top, img.width, img.height);
+                }
+                counter++;
+            });
+
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpeg');
+            link.download = 'merged_image.jpg';
+            link.click();
+        });
+    </script>
+</body>
+</html>
